@@ -4,13 +4,14 @@ class ShippingContainer:
 
     next_serial = 8334
 
-    # Moving out the serial number generation from init and created a static method
-    @staticmethod
-    def _generate_serial():
-        result = ShippingContainer.next_serial
+    # Changing this to a class method
+    @classmethod
+    def _generate_serial(cls):
+        result = cls.next_serial
         ShippingContainer.next_serial += 1
         return result
 
+    # This helps to create an object with empty contents
     @classmethod
     def create_empty(cls, owner_code):
         return cls(owner_code,[])
