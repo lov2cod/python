@@ -45,6 +45,39 @@ class RefrigeratorShippingContainer(ShippingContainer):
     # Adding temperature to the constructor
     def __init__(self, owner_code, contents, *, celsius, **kwargs):
         super().__init__(owner_code, contents, **kwargs)
-        if celsius > RefrigeratorShippingContainer.MAX_CELSIUS :
-            raise ValueError("Temperature too hot")
+        # if celsius > RefrigeratorShippingContainer.MAX_CELSIUS:
+        #     raise ValueError("Temperature too hot")
         self.celsius = celsius
+
+    # property for celsius
+    @property
+    def celsius(self):
+        return self._celsius
+
+    # setter for celsius
+    @celsius.setter
+    def celsius(self, value):
+        if value > RefrigeratorShippingContainer.MAX_CELSIUS :
+            raise ValueError("Temperature is too hot")
+        self._celsius = value
+
+    #celsius to fahrenheit
+    @staticmethod
+    def _c_to_f(celsius):
+        return celsius * (9/5) + 32
+
+    # fahrenheit to celsius
+    @staticmethod
+    def _f_to_c(fahrenheit):
+        return fahrenheit - 32 * (5/9)
+
+    # To get the fahrenheit
+    @property
+    def fahrenheit(self):
+        return RefrigeratorShippingContainer._c_to_f(self._celsius)
+
+    # Set the temp in celsius when passing fahrenheit
+    @fahrenheit.setter
+    def fahrenheit(self, value):
+        self.celsius = RefrigeratorShippingContainer._f_to_c(value)
+
